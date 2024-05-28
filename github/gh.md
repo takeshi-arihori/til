@@ -19,6 +19,7 @@ https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generati
 ```
 https://github.com/settings/tokens
 ```
+![gh-1](https://github.com/takeshi-arihori/til/assets/83809409/2f76966d-2684-4ca2-b9db-07f4d7a4ef6a)
 
 例: チェック
 - repo
