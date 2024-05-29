@@ -39,7 +39,7 @@ php-app イメージを基に新しいコンテナを作成し、ホストの808
 `-v "$(pwd)"/src:/var/www/html`がなければマッピングしない。開発環境でホスト側のコードをコンテナ内で実行する場合などは便利。
 `docker run -p 8080:80 -d -v "$(pwd)"/src:/var/www/html --name php-container php-app`
 
-## docker-composeを使用 (PHP・MySQLを設定)
+## PHP・MySQLを設定
 
 Dockerfile
 ```
