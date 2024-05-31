@@ -7,6 +7,11 @@
 - MySQLコンテナがDocker上で稼働していること
 - DBeaverがインストールされていること
 
+```
+Docker version 26.1.1
+Docker Compose version v2.27.0-desktop.2
+```
+
 ## 1. Dockerコンテナの確認
 
 まず、Docker上でMySQLコンテナが正常に稼働していることを確認します。
