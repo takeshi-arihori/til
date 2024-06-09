@@ -1,5 +1,16 @@
 ## Docker環境での faker インストール手順
 
+### 事前準備
+- Dockerfileにcomposerのインストールを記述しておく
+```
+# Composer のインストール
+RUN curl -sS https://getcomposer.org/installer -o composer-setup.php \
+    && HASH="$(curl -sS https://composer.github.io/installer.sig)" \
+    && echo "$HASH composer-setup.php" | sha384sum -c - \
+    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+    && rm composer-setup.php
+```
+
 ### 手順1. 
 1: PHPコンテナ内でFakerをインストール
 まず、PHPコンテナに入ってFakerをインストールします。
