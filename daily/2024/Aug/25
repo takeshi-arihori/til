@@ -1,10 +1,23 @@
 ## 学習内容
 
 ### PHP
-- 独学エンジニア
-dockerを用いたPHPの開発の流れを理解。
+#### 独学エンジニア
+- dockerを用いたPHPの開発の流れ
 
-### Algorithm
+- コーディング規約について
+PSR-1（公式ドキュメント）
+https://www.php-fig.org/psr/psr-1/
+
+PSR-1（日本語訳）
+https://www.ritolab.com/entry/91
+
+PSR-12(公式ドキュメント)
+https://www.php-fig.org/psr/psr-12/
+
+PSR-12(日本語訳)
+https://www.ritolab.com/entry/208
+
+#### Algorithm
 - RecursionCS上級
 
 
