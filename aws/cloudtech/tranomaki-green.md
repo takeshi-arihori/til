@@ -62,11 +62,13 @@ sudo chkconfig httpd on
 ```
 
 ## データベースの構築
-
+[参考コマンド](https://github.com/CloudTechOrg/book-publish-web-application/blob/main/commands/chapter6.md)
+[EC2上にMySQLインストール時のエラー]()
 ### Amazon RDS
 データベースのバックアップ、パフォーマンスの監視、スケーリングなどの作業の自動化されており、高い可溶性と信頼性を提供。セキュリティも重視 -> データの暗号化やアクセス制御などの機能も用意されている。
 
 ### 作成手順
 Subnet(DB用を2つ, 別のアベイラビリティゾーンで作成) -> RDS(サブネットグループを作成) -> DB作成 -> RDSにセキュリティグループの追加 -> EC2を踏み台にしてRDSに接続テスト -> パッケージのインストール -> 
 
+## 負荷分散
 
