@@ -40,6 +40,9 @@ VPC -> Subnet -> Internet-gateway -> ルートテーブルに追加
 
 ## Webサーバの構築
 
+[aws-cloudtech.drawio.pdf](https://github.com/user-attachments/files/16905892/aws-cloudtech.drawio.pdf)
+
+
 ### Amazon EC2
 コンピューティング能力やメモリ、ストレージなどのリソースを柔軟に調整でき、いろいろな用途に適した仮想マシンを提供する。
 
@@ -63,7 +66,8 @@ sudo chkconfig httpd on
 
 ## データベースの構築
 [参考コマンド](https://github.com/CloudTechOrg/book-publish-web-application/blob/main/commands/chapter6.md)
-[EC2上にMySQLインストール時のエラー]()
+[EC2上にMySQLインストール時のエラー](https://github.com/takeshi-arihori/til/blob/main/aws/ec2/gpg_error.md)
+
 ### Amazon RDS
 データベースのバックアップ、パフォーマンスの監視、スケーリングなどの作業の自動化されており、高い可溶性と信頼性を提供。セキュリティも重視 -> データの暗号化やアクセス制御などの機能も用意されている。
 
@@ -71,4 +75,25 @@ sudo chkconfig httpd on
 Subnet(DB用を2つ, 別のアベイラビリティゾーンで作成) -> RDS(サブネットグループを作成) -> DB作成 -> RDSにセキュリティグループの追加 -> EC2を踏み台にしてRDSに接続テスト -> パッケージのインストール -> 
 
 ## 負荷分散
+Webサーバーの負荷分散を行う。
+複数のアベイラビリティゾーンにまたがってサーバを配置して負荷分散を行うことで、アベイラビリティゾーンに障害が発生してもシステムが停止せずに稼働させることができる。(マルチAZ構成)
+![aws-cloudtech drawio](https://github.com/user-attachments/assets/dfdc36bc-de0d-4292-9d0f-3ec12a2e5e51)
+
+### マルチAZ構成
+アプリケーションやデータベースなどのリソースを複数のAZに分散させることで可用性と耐障害性を向上させる仕組み。
+1つのAZに障害が発生した場合でも、他のAZでサービスを継続することができる。
+
+![aws-cloudtech drawio](https://github.com/user-attachments/assets/c77f748f-838e-4c6f-a863-9ec1bfd5fe0c)
+
+### AMI
+AWSで使用される仮想マシンのテンプレート。
+
+
+### ELB
+レイヤー7(アプリケーション層)での負荷分散に適していて、HTTP/HTTPSトラフィックを効率的に処理する。
+
+### 手順
+別AZにサブネットを作成 -> 作成したEC2インスタンスからAMIを作成 -> 
+
+
 
