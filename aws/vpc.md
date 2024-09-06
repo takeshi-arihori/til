@@ -29,4 +29,8 @@ VPCのアドレスレンジ帯は /16 ~ /28
 
 ### ENI(Elastic Network Interface)
 EC2にはENIが付与されている
-ENIには複数のIPアドレスを設定することができる
+ENIには複数のIPアドレスを設定すること
+
+| Security group | Network ACL |
+| -------------- | ----------- |
+| すてー
