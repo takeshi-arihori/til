@@ -79,7 +79,7 @@ Cluster -> Service -> Task
 - プライベートIPアドレス: 特定のネットワーク内でのみ使用されるアドレス
 
 #### プライベートIPアドレスの範囲
-RFCの規格で決まっている
+RFCの規格で決まっている  
 [RFC](https://datatracker.ietf.org/doc/html/rfc1918)
 10.0.0.0 - 10.255.255.255
 172.16.0.0 - 172.31.255.255
@@ -118,3 +118,96 @@ IPアドレスは全部で32個あるのだが、上記の例では28個まで�
 - 例 VPC: 10.0.0.0/16 = 10.0.0.0 ~ 10.0.255.255
 - 例 Subnet1: 10.0.0.0/24 = 10.0.0.0 ~ 10.0.0.255
 - 例 Subnet2: 10.0.1.0/24 = 10.0.1.0 ~ 10.0.1.255
+
+### VPCとSubnetの作成
+- リージョン: オレゴン
+- VPC: my-workspace-vpc, 10.0.0.0/20
+- Subnet(private): my-workspace-subnet-app-private1-a, AZ: us-west-2a, 10.0.0.0/24
+- Subnet(public): my-workspace-subnet-app-public1-a, AZ: us-west-2a, 10.0.1.0/24
+
+### リージョンとアベイラビリティゾーン
+#### リージョンとは
+- 実ユーザの想定地域と近いほうが応答時間が早くなる
+- リージョンによって同じサービスでも費用が異なる
+- 一部サービスが使えないリージョンもある
+#### アベイラビリティゾーン
+- VPC: アベイラビリティゾーン✕
+- Subnet: アベイラビリティゾーン〇
+サブネット単位で複数のAZを設定できるので、リスクが分散できる。
+ 
+### パブリックサブネットとプライベートサブネット
+#### パブリックサブネット
+インターネットに直接アクセスできるサブネット
+サーバはグローバルIPアドレスを持つことで外部からアクセスできる
+
+#### プライベートサブネット
+インターネットに直接アクセスできないサブネット
+
+### ルートテーブルとインターネットゲートウェイ
+#### ルートテーブル
+| 送信先 | ターゲット |
+|-------| ---------- |
+| 宛先  | どこに転送するのか |
+| 10.0.0.0/24 | local | -> Subnet内に通信する
+
+詳細度から順にルーティングが決まる
+ターゲットには、IGW, NGWなど
+パブリックサブネットにはInternet Gatewayが含まれる。
+
+#### ルートテーブル・インターネットゲートウェイの作成
+- ルートテーブル
+my-workspace-rtb-private1-a, my-workspace-vpc
+my-workspace-rtb-public1-a, my-workspace-vpc
+
+- インターネットゲートウェイ
+my-workspace-igw
+
+#### 作成後に行うこと
+- IGWにVPCをアタッチ
+- ルートテーブルにIGWを設定
+- Subnetにルートテーブルの関連付けを行う
+  - private Subnet -> 
+private のルートテーブルに
+  - public Subnet -> public のルートテーブルに
+
+![learn-ecs-ルートテーブル drawio](https://github.com/user-attachments/assets/ec87c42c-c8c9-46b4-80ed-9b3e27007e58)
+
+### セキュリティグループ
+VPC内のサーバなどに紐づけて通信を制御するための仮想ファイアウォール。
+アウトバウンドとインバウンドのルールを定義してアクセスを管理。
+アウトバウンドの応答通信は、インバウンドルールは適用せず常に許可。
+
+- ホワイトリスト方式: インバウンド、アウトバウンドルールに記載のないものはすべて不許可。
+- 高い柔軟性: 特定のセキュリティが設定されているものは許可。
+- 即時反映: ルール変更はすべての関連するインスタンスに即時反映。
+
+## ECSでシンプルなアプリ作成(練習用)
+### システム設計図
+![learn-ecs-Nginxコンテナ drawio](https://github.com/user-attachments/assets/aa527cb3-eec0-4829-96cb-8931566af3e2)
+![learn-ecs-簡単なアプリ drawio](https://github.com/user-attachments/assets/0a0aa9ca-f17e-43c4-8a27-cd571bb08e19)
+#### 要件
+- タスク -> Cluster直下に配置
+- Fargateを使用
+- Task定義
+- Nginx -> ECRからpull (通常はDockerfileを通じてECRにpush -> それをpullして起動させる)
+
+### ECS Clusterの作成
+- リージョン: オレゴン
+- my-app-cluster, インフラ: AWS fargate
+
+### ECS Task定義
+[TaskのCPU, Memory料金](https://aws.amazon.com/jp/fargate/pricing/)
+
+- my-app-frontend
+- AWS fargate
+- Linux/x86_64
+- CPU: .25 vCPU
+- GB: .5GB
+- タスクロール: 権限付与する場合
+- タスク実行ロール: 新しいロールの作成
+- コンテナの作成(複数可能)
+  - イメージURI: Amazon ECR Public GalleryからNginxを取得
+
+### Fargateにアプリをデプロイ
+クラスタ -> 作成したクラスタを選択 -> 新しいタスクの実行 -> セキュリティグループ新規作成
+
