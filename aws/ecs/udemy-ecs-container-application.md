@@ -185,7 +185,8 @@ VPC内のサーバなどに紐づけて通信を制御するための仮想フ�
 ### システム設計図
 ![learn-ecs-Nginxコンテナ drawio](https://github.com/user-attachments/assets/aa527cb3-eec0-4829-96cb-8931566af3e2)
 ![learn-ecs-簡単なアプリ drawio](https://github.com/user-attachments/assets/0a0aa9ca-f17e-43c4-8a27-cd571bb08e19)
-#### 要件
+### 要件
+**GOAL**: Nginxを画面に表示させる
 - タスク -> Cluster直下に配置
 - Fargateを使用
 - Task定義
