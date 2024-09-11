@@ -288,3 +288,42 @@ CodeDeploy のサービスロール -> IAMの作成(AWSCodeDeployRoleForECS -> �
 
 ![スクリーンショット 2024-09-11 123334](https://github.com/user-attachments/assets/6505a6ad-8e31-43bc-82f4-cecf42c05646)
 
+
+![スクリーンショット 2024-09-11 112656](https://github.com/user-attachments/assets/b4f0fc42-2101-447e-95bb-c68037afb470)
+
+作成後、ロードバランサーのリスナーとルールに9000番で設定したルールが追加されている
+
+![スクリーンショット 2024-09-11 124253](https://github.com/user-attachments/assets/2b10f031-e20e-4fc5-aa34-12ccf5f1183b)
+
+
+### Code Deployの設定
+Blue/Greenデプロイがまだ未完成なので、デプロイメントは作成されていない。
+CodeDeploy -> アプリケーション -> 作成されたDeployを選択
+
+![スクリーンショット 2024-09-11 135032](https://github.com/user-attachments/assets/0061800f-03cc-418d-840a-a85f94b5b8f0)
+
+#### デプロイ設定
+- リスナーが新しいターゲットグループに変更するのを手動か自動化設定
+トラフィックの再ルーティング: トラフィックを再ルーティングするタイミングを指定します -> 2時間
+
+- Blueコンテナを削除するまでの猶予時間
+元のリビジョンの終了: 1時間
+
+### ECR設定
+1. 自分たちのECRリポジトリを作成
+   ECR -> リポジトリ -> プライベートリポジトリ作成
+2. "Hello World"と表示する簡単なアプリを作成する
+**開発の流れ**
+![learn-ecs-original-application drawio](https://github.com/user-attachments/assets/b68e0e4d-d6df-40b0-9add-c773e1700ea6)
+- LocalでDockerfileを作成し、テスト
+- IAM でアクセス権限を付与
+- AWS CLIをインストールし、アクセスキー等の設定を行う
+
+4. 作成したアプリを含むコンテナイメージをECRリポジトリにアップロード(Push)する
+- ECRのプッシュコマンドを表示通りにコマンドを入力しPush -> ECRにPushしたイメージが反映されているか確認
+- Blue/GreenのGreenで使用するためのタスクを追加 (URIはPushしたイメージのURI)
+- クラスター -> 作成したクラスター -> サービスの更新 -> 最新のリビジョンを選択 -> 
+
+ECSの削除はCloudFormationから行うと楽。
+
+
