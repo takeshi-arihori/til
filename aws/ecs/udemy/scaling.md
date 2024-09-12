@@ -43,6 +43,8 @@ CPUやメモリのターゲット使用率になるようコンテナ数を増�
 
 ターゲット追跡アラームがユースケースで機能しない場合にステップスケーリングを使用する。
 
+
+## システム要件と設計書
 ![learn-ecs-Auto Scaling drawio](https://github.com/user-attachments/assets/13554676-05b7-4773-8b52-69e5ebb461b0)
 
 ![learn-ecs-sec08-handson drawio](https://github.com/user-attachments/assets/cf772de0-b0b3-4010-a58c-d80674bedf3d)
@@ -54,7 +56,32 @@ CPUやメモリのターゲット使用率になるようコンテナ数を増�
 - 暗号化を行うことで負荷を意図的に欠けるためのタスク
 - Docker Image: ECR
 - CloudWatch: タスクやCPU使用状況などを監視し、既定の値を超えた場合オートスケールするようにECSに命令を出す。
-- Serviceに対してのセキュリティも設定
-![learn-ecs-sec08-handson2 drawio](https://github.com/user-attachments/assets/9b1c439d-ecab-4830-89af-916df7354a8b)
+
+### 作成するリソース
+| 必要なAWSリソース |  名称 |
+| ---------------- | ----- |
+| ECS Cluster | my-app-cluster |
+| ECS Service | my-app-autoscaling-service |
+| Task定義 | my-app-encryptor |
+| ECR Repository | my-app-encryptor |
+| CloudWatch Policy | my-app-autoscaling-policy |
+| VPC  | my-workspace-vpc |
+|  Subnet  | my-workspace-subnet-app-public1-a |
+|          | my-workspace-subnet-app-public1-b |
+| Security Group | my-app-autoscaling-lb-sg |
+|                | my-app-autoscaling-service-sg |
+| I AM Role | ecsTaskExecutionRole |
+| Application Load Balancer | my-app-autoscaling-alb |
+| Target Group | my-app-autoscaling-tg |  
 
 
+![learn-ecs-sec08-handson2 drawio](https://github.com/user-attachments/assets/b2607836-c434-4ae8-a16e-73452cac328b)
+
+## 作成手順
+
+k6を使用: 負荷テスト用
+
+ECRレジストリを作成後、localのimageをpushするため(Pushコマンド通りに手動でPush)  
+ECS -> タスク定義を作成  
+ECS -> Serviceの作成(LB, TGも一緒に作成)  
+Serviceのセキュリティ: ロードバランサのセキュリティグループからのみのアクセスにインバウンドルールを指定
