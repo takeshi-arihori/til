@@ -45,8 +45,16 @@ CPUやメモリのターゲット使用率になるようコンテナ数を増�
 
 ![learn-ecs-Auto Scaling drawio](https://github.com/user-attachments/assets/13554676-05b7-4773-8b52-69e5ebb461b0)
 
-
 ![learn-ecs-sec08-handson drawio](https://github.com/user-attachments/assets/cf772de0-b0b3-4010-a58c-d80674bedf3d)
 
+**全体の流れ**  
+- クライアントがHTTPリクエスト -> Load Balancer(Security Group 8080番のみ通す を設定)
+- ロードバランサーがECSのタスクにリクエスト
+- コンテナはオートスケールした場合、2,3 と増えることにになる。
+- 暗号化を行うことで負荷を意図的に欠けるためのタスク
+- Docker Image: ECR
+- CloudWatch: タスクやCPU使用状況などを監視し、既定の値を超えた場合オートスケールするようにECSに命令を出す。
+- Serviceに対してのセキュリティも設定
+![learn-ecs-sec08-handson2 drawio](https://github.com/user-attachments/assets/9b1c439d-ecab-4830-89af-916df7354a8b)
 
 
