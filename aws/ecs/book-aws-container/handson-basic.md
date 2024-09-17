@@ -1,4 +1,8 @@
+
 # ハンズオン
+![aws-container-basic-sec03 sample-application-aws-diagramのコピー drawio](https://github.com/user-attachments/assets/9fc797c9-73fc-4a28-82bb-ef340e1c76ba)
+
+
 ## 流れ
 **Step1: ネットワークの構築**  
 - VPCとサブネットの作成
@@ -31,5 +35,7 @@
 - フロントエンドアプリケーションの更新
 - 疎通確認
 
+
+## 
 
 
