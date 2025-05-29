@@ -82,6 +82,17 @@ DELIMITER ;
 CALL GetEmployeesByDepartment('IT', 50000);
 ```
 
+**MySQLのストアドプロシージャの制限**
+MySQLのストアドプロシージャは他のDBMS製品と比べると機能が限定的です。特に以下の点で劣ります：
+
+- **デバッグ機能**: ステップ実行やブレークポイントが利用できない
+- **例外処理**: エラーハンドリング機能が基本的
+- **データ型**: 豊富なデータ型のサポートが限定的
+- **配列・コレクション**: 複雑なデータ構造の操作が困難
+- **パッケージ機能**: 関連するプロシージャをグループ化する機能がない
+
+ストアドプロシージャに関しては、**有償であるOracle DBやSQL Serverの方が圧倒的に優れて**います。これらの製品では、PL/SQLやT-SQLといった強力な拡張言語により、複雑なビジネスロジックを効率的に実装できます。
+
 # Mac上での学習方法
 
 MacでSQL Serverのストアドプロシージャを学習する最も効率的な方法は、**SQL Server for Linux on Docker**を利用することです。これにより、Windowsマシンを用意することなく、本格的なSQL Server環境を構築できます。
@@ -104,6 +115,53 @@ docker run -e "ACCEPT_EULA=Y" \
 - `MSSQL_SA_PASSWORD`: 管理者パスワードを設定（8文字以上で大文字・小文字・数字・記号を含む）
 - `-p 1433:1433`: ポート1433でアクセス可能にする
 - `--name`: コンテナ名を指定
+
+## CLIでの操作方法
+
+**コンテナに接続してsqlcmdを使用**
+
+```bash
+# コンテナ内のbashに入る
+docker exec -it sqlserver-practice bash
+
+# sqlcmdでSQL Serverに接続（SSL証明書エラー回避のため-Cオプション使用）
+/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'YourStrong@Passw0rd' -C
+```
+
+**sqlcmdの基本操作**
+
+sqlcmdでは、SQL文を入力した後に `GO` を入力して実行します：
+
+```sql
+-- データベース一覧表示
+1> SELECT name FROM sys.databases;
+2> GO
+
+-- バージョン確認
+1> SELECT @@VERSION;
+2> GO
+
+-- 現在のデータベース確認
+1> SELECT DB_NAME();
+2> GO
+
+-- 新しいデータベース作成
+1> CREATE DATABASE SampleDB;
+2> GO
+
+-- データベース切り替え
+1> USE SampleDB;
+2> GO
+
+-- sqlcmdを終了
+1> EXIT
+```
+
+**CLIでの注意点**
+- SQL Server 2022では新しい `mssql-tools18` が使用される
+- SSL証明書の検証エラーを回避するため `-C` オプションが必要
+- 各SQL文の後に必ず `GO` を入力して実行
+- 複数行にわたるSQL文も入力可能
 
 ## ストアドプロシージャ練習例
 
