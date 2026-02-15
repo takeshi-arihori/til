@@ -19,7 +19,7 @@
     (Custom)」モードでインストール。
     -   インスタンス名: `SQLEXPRESS`
     -   認証モード: **混合モード**
-    -   `sa` パスワード: `Password123`
+    -   `sa` パスワード: `<強力なパスワード>`
 2.  **TCP/IP の有効化とポート固定**
     -   TCP ポート: `1433`
 
@@ -31,7 +31,7 @@
 
 ### 1-3. アプリケーション用ユーザー作成
 
--   `test-user` を作成（Pass: `Password123`）
+-   `test-user` を作成（Pass: `<強力なパスワード>`）
 -   `db_owner` 付与。
 
 ------------------------------------------------------------------------
@@ -76,7 +76,7 @@ mkdir C:\Projects
 cd C:\Projects
 git clone {project-name} 
 
-cd user_management_system\src
+cd {project-name}\src
 composer install
 
 cp .env.example .env

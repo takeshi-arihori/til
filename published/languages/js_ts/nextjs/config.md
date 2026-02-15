@@ -32,48 +32,25 @@ services:
 
 4. Docker コンテナを使用して Next.js アプリケーションを TypeScript で作成
 ```
-docker-compose build
-docker-compose run --rm app sh -c 'npx create-next-app src --typescript'
-docker-compose up
+docker compose build
+docker compose run --rm app sh -c 'npx create-next-app src --typescript'
+docker compose up
 ```
 
 5. eslint の設定
 ```
-docker-compose run --rm app npm i --save-dev eslint eslint-config-next
+docker compose run --rm app npm i --save-dev eslint eslint-config-next
 ```
 
-- .eslintrc.json
-```
-  {
-  "env": {
-    "browser": true,
-    "es2021": true
-  },
+- `.eslintrc.json`（コメントを含まない有効なJSON）
+```json
+{
   "extends": [
-    "plugin:react/recommended",
-    "standard",
-    "prettier" // eslintとprettierの衝突回避
+    "next/core-web-vitals",
+    "prettier"
   ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": "latest",
-    "sourceType": "module"
-  },
-  "plugins": ["react", "@typescript-eslint"],
   "rules": {
-    "react/react-in-jsx-scope": "off", // v17からReactをimport不要になった
-    // importをアルファベット順にする
-    "import/order": [
-      "error",
-      {
-        "alphabetize": {
-          "order": "asc"
-        }
-      }
-    ]
+    "react/react-in-jsx-scope": "off"
   }
 }
 ```
@@ -81,5 +58,5 @@ docker-compose run --rm app npm i --save-dev eslint eslint-config-next
 6. prettier の設定
 
 ```
-docker-compose run --rm app npm i --save-dev prettier eslint-config-prettier
+docker compose run --rm app npm i --save-dev prettier eslint-config-prettier
 ```

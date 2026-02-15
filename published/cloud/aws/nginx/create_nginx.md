@@ -94,8 +94,8 @@ another-example.com → `/etc/nginx/sites-enabled/another-example.com`
   NGINX のデフォルトサーバ設定
   1. `sudo vi /etc/nginx/sites-available/default` を実行して、NGINX のデフォルトサーバ設定ファイルを開きます。
   2. 設定ファイル内の `root /var/www/html;` という行をコメントアウトし、新しいルートパスである `root /var/www/{website}/public/{project-website};` を追加します。
-  3. `index.html index.htm index.nginx-debian.html;` という行もコメントアウトし、新しいインデックスとして index {index.html}; を追加します。index は、誰かがウェブサイトの URL にナビゲートしたときにどのファイルを提供するかを NGINX に指示します。
+  3. `index.html index.htm index.nginx-debian.html;` という行もコメントアウトし、新しいインデックスとして `index index.html;` を追加します。index は、誰かがウェブサイトの URL にナビゲートしたときにどのファイルを提供するかを NGINX に指示します。
      ここで指定したhtmlファイルがウェブサイトのホームページになります。
-  5. シンボリックリンクが設定され、`sites-enabled` に設定が反映されていることを確認してください。これはnginxが使用するものです。 `sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled` を実行します。
+  4. シンボリックリンクが設定され、`sites-enabled` に設定が反映されていることを確認してください。これはnginxが使用するものです。 `sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default` を実行します。
   6. 変更を反映させるために、`sudo systemctl restart nginx` を実行し、NGINX を再起動します。
  

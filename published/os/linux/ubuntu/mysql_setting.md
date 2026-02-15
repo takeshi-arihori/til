@@ -1,4 +1,4 @@
-# Ubuntu 24にMySQL 8.0をインストールし、DBeaverで接続する方法
+# Ubuntu 24にMySQL 8.xをインストールし、DBeaverで接続する方法
 
 ## 環境
 ```
@@ -18,7 +18,7 @@ sudo dpkg -i /PATH/mysql-apt-config_0.8.30-1_all.deb
 ```
 
 ※ 公式リポジトリの追加については以下を参照
-- [MySQL APTリポジトリの追加(Oracle公式)]([https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/](https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#apt-repo-fresh-install))
+- [MySQL APTリポジトリの追加(Oracle公式)](https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#apt-repo-fresh-install)
 - [packageのダウンロード](https://dev.mysql.com/downloads/repo/apt/)
 
 ### 2. パッケージリストの更新とMySQLのインストール
@@ -72,8 +72,9 @@ sudo mysql -u root -p
 以下のSQLコマンドを実行します。
 
 ```sql
-CREATE USER 'takeshi'@'%' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON *.* TO 'takeshi'@'%' WITH GRANT OPTION;
+CREATE DATABASE testdb;
+CREATE USER 'takeshi'@'localhost' IDENTIFIED BY '<強力なパスワード>';
+GRANT ALL PRIVILEGES ON testdb.* TO 'takeshi'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
@@ -88,9 +89,9 @@ DBeaverでtakeshiユーザーとして接続を行います。
 ```
 Server Host: MySQLサーバーのIPアドレスまたはホスト名（ローカルホストの場合は127.0.0.1）
 Port: 3306
-Database: mysqlデフォルトデータベース
+Database: testdb
 Username: takeshi
-Password: password
+Password: <強力なパスワード>
 ```
 5. ドライバーのプロパティで、allowPublicKeyRetrieval: trueに設定。
 6. Test Connectionボタンを押して接続を確認。
@@ -108,4 +109,4 @@ DBeaverからtakeshiユーザーで接続した後、新しいデータベース
 CREATE DATABASE testdb;
 ```
 
-以上で、Ubuntu 24にMySQL 8.3をインストールし、DBeaverでtakeshiユーザーを使用してデータベースを作成する方法が完了しました。
+以上で、Ubuntu 24にMySQL 8.xをインストールし、DBeaverで`takeshi`ユーザーを使用してデータベースを作成する方法が完了しました。

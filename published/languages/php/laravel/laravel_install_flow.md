@@ -68,30 +68,10 @@ sudo apt install mysql-server
 sudo service mysql start
 ```
 
-#### rootユーザーのパスワード設定と認証方式の変更
+#### rootユーザーでMySQLにログイン
 
 ```bash
 sudo mysql
-```
-
-#### MySQLコンソールで以下を実行:
-
-```sql
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-exit;
-```
-
-#### rootユーザーで再度ログインし、auth_socket認証を設定
-
-```bash
-sudo mysql -u root -p
-```
-
-#### パスワードを入力後、以下を実行:
-
-```sql
-ALTER USER 'root'@'localhost' IDENTIFIED WITH auth_socket;
-exit;
 ```
 
 #### MySQLのセキュリティ設定
@@ -104,14 +84,15 @@ sudo mysql_secure_installation
 rootユーザーでMySQLにログイン
 
 ```bash
-mysql -u root -p
+sudo mysql
 ```
 
 #### ユーザーの作成と権限の付与
 
 ```sql
-CREATE USER 'laravel'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password@123';
-GRANT CREATE, ALTER, DROP, INSERT, UPDATE, INDEX, DELETE, SELECT, REFERENCES, RELOAD ON *.* TO 'laravel'@'localhost' WITH GRANT OPTION;
+CREATE DATABASE laravel_app CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'laravel'@'localhost' IDENTIFIED BY '<強力なパスワード>';
+GRANT ALL PRIVILEGES ON laravel_app.* TO 'laravel'@'localhost';
 FLUSH PRIVILEGES;
 exit;
 ```
@@ -186,20 +167,22 @@ Default database updated, run default database migration?: No
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=<データベース名>
+DB_DATABASE=laravel_app
 DB_USERNAME=laravel
-DB_PASSWORD=password@123
+DB_PASSWORD=<強力なパスワード>
 ```
 
-### 7. データベースの作成
+### 7. データベースの作成（未作成の場合）
 ```bash
-sudo mysql -u root -p
+sudo mysql
 ```
 
 #### MySQLコンソールで以下を実行:
 
 ```sql
 CREATE DATABASE <データベース名> CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+GRANT ALL PRIVILEGES ON <データベース名>.* TO 'laravel'@'localhost';
+FLUSH PRIVILEGES;
 exit;
 ```
 
@@ -214,4 +197,3 @@ php artisan serve
 npm install
 npm run dev
 ```
-

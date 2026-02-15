@@ -62,7 +62,7 @@ composer init
 
 `src/Interfaces/Engine.php`
 
-```
+```php
 <?php
 
 namespace Interfaces;
@@ -70,9 +70,11 @@ namespace Interfaces;
 interface Engine {
     public function start(): string;
 }
-src/Engines/GasolineEngine.php
-php
-コードをコピーする
+```
+
+`src/Engines/GasolineEngine.php`
+
+```php
 <?php
 
 namespace Engines;
@@ -88,7 +90,7 @@ class GasolineEngine implements Engine {
 
 `src/Engines/ElectricEngine.php`
 
-```
+```php
 <?php
 
 namespace Engines;
@@ -105,7 +107,7 @@ class ElectricEngine implements Engine {
 
 `src/Cars/Car.php`
 
-```
+```php
 <?php
 
 namespace Cars;
@@ -131,7 +133,7 @@ abstract class Car {
 
 `src/Cars/GasCar.php`
 
-```
+```php
 <?php
 
 namespace Cars;
@@ -152,7 +154,7 @@ class GasCar extends Car {
 
 `src/Cars/ElectricCar.php`
 
-```
+```php
 <?php
 
 namespace Cars;

@@ -91,7 +91,7 @@ ENV MYSQL_PASSWORD=test
 ENV MYSQL_DATABASE=test_db
 
 # ボリューム
-VOLUME ./data:/var/lib/mysql
+VOLUME /var/lib/mysql
 ```
 
 init.sql
@@ -103,7 +103,7 @@ CREATE TABLE test_db.users (
     PRIMARY KEY (id)
 );
 
-INSERT INTO `users` VALUES (1, 'Takeshi Arihori', 37)
+INSERT INTO `users` VALUES (1, 'Takeshi Arihori', 37);
 ```
 ### コンテナの立ち上げ
 ※ 各Dockerfileがある場所にdirectoryを移動
@@ -141,7 +141,7 @@ docker build -t php-db .
 docker container run \
 -d \
 --rm \
+-v "$(pwd)"/data:/var/lib/mysql \
 --network php-mysql-network \
 --name run-php-db php-db
 ```
-
