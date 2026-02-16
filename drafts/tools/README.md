@@ -4,3 +4,4 @@
 
 ## Directories
 - `dbeaver/`
+- `codex/`
